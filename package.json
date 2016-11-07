@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack",
     "start": "webpack-dev-server",
-    "test": "mocha ./src/*/*.spec.js --compilers js:babel-core/register"
+    "test": "mocha ./src/*/*.spec.js --watch --compilers js:babel-core/register"
   },
   "dependencies": {
     "react": "^15.3.2",
