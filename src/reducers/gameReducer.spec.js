@@ -1,4 +1,5 @@
 import assert from "assert"
+import chai from 'chai';
 import changeState from "./gameReducer"
 import { resetGame, selectTile, goToHistory } from "../actions/gameActions"
 
@@ -69,6 +70,22 @@ describe("reducers", function() {
                 let newState = changeState(state, selectTile(0));
 
                 assert.equal(state, newState);  
+            });
+
+            it("should be different instace of state", function() {
+                let state = changeState({}, resetGame());
+                let newState = changeState(state, selectTile(0));
+                assert.ok(state !== newState);
+            });
+
+            it("should add new record to history", function() {
+                let state = changeState({}, resetGame());
+                let newState = changeState(state, selectTile(0));
+
+                var history1 = newState.history[0].squares;
+                var history2 = newState.history[1].squares;
+
+                assert.notStrictEqual(history1, history2);
             });
         });
 

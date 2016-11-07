@@ -27,7 +27,7 @@ function resetGame() {
 function selectTile(state, action) {
     const history = state.history;
     const current = history[history.length - 1];
-    const squares = current.squares;
+    const squares = current.squares.slice();
     const isLastStep = history.length - 1 === state.stepNumber
 
     if (!isLastStep) {
