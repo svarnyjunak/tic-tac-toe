@@ -1,9 +1,9 @@
 import assert from "assert"
-import changeState from "./game"
-import { resetGame, selectTile, goToHistory } from "../actions/game"
+import changeState from "./gameReducer"
+import { resetGame, selectTile, goToHistory } from "../actions/gameActions"
 
 describe("reducers", function() {
-    describe("game", function() {
+    describe("gameReducer", function() {
         describe("RESET_GAME", function() {
             it("should return history with one record", function() {
                 let state = changeState({}, resetGame() );

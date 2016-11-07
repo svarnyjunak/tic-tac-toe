@@ -2,13 +2,15 @@ import React from "react";
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Board from "../../src/components/board.js";
-import {resetGame, selectTile, goToHistory} from "../actions/game"
+import {resetGame, selectTile, goToHistory} from "../actions/gameActions"
 import { calculateWinner } from "../utils/utils"
 
 class Game extends React.Component {
   render() {
     const history = this.props.history;
     const current = history[this.props.stepNumber];
+    console.log(this.props.stepNumber);
+    console.log(current);
     const winner = calculateWinner(current.squares);
 
     let status;

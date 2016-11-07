@@ -1,4 +1,4 @@
-import { RESET_GAME, SELECT_TILE, GO_TO_HISTORY } from "../actions/game"
+import { RESET_GAME, SELECT_TILE, GO_TO_HISTORY } from "../actions/gameActions"
 import { calculateWinner } from "../utils/utils"
 
 export default function game(state, action) {
@@ -8,11 +8,7 @@ export default function game(state, action) {
         case SELECT_TILE:
             return selectTile(state, action);
         case GO_TO_HISTORY:
-            return Object.assign({}, state, {
-                stepNumber: action.step,
-                xIsNext: (action.step % 2) ? false : true,
-            });
-
+            return goToHistory(state, action);
         default:
             return state
     }
@@ -55,4 +51,11 @@ function selectTile(state, action) {
         stepNumber: ++state.stepNumber,
         xIsNext: !state.xIsNext
     };
+}
+
+function goToHistory(state, action) {
+    return Object.assign({}, state, {
+        stepNumber: action.step,
+        xIsNext: (action.step % 2) ? false : true,
+    });
 }
