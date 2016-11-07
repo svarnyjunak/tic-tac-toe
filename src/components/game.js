@@ -1,66 +1,21 @@
 import React from "react";
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import Board from "../../src/components/board.js";
+import {resetGame, selectTile, goToHistory} from "../actions/game"
+import { calculateWinner } from "../utils/utils"
 
-function getInitialState() {
-  return {
-    history: [{
-      squares: Array(9).fill(null)
-    }],
-    stepNumber: 0,
-    xIsNext: true
-  };
-}
-
-export default class Game extends React.Component {
-  constructor() {
-    super();
-    this.state = getInitialState();
-  }
-
-  handleClick(i) {
-    const history = this.state.history;
-    const current = history[history.length - 1];
-    const squares = current.squares.slice();
-    const isLastStep = history.length - 1 === this.state.stepNumber
-
-    if (!isLastStep) {
-      return;
-    }
-
-    if (calculateWinner(squares) || squares[i]) {
-      return;
-    }
-    squares[i] = this.state.xIsNext ? 'X' : 'O';
-    this.setState({
-      history: history.concat([{
-        squares: squares
-      }]),
-      stepNumber: ++this.state.stepNumber,
-      xIsNext: !this.state.xIsNext,
-    });
-  }
-
-  handleReset() {
-    this.setState(getInitialState());
-  }
-
-  jumpTo(step) {
-    this.setState({
-      stepNumber: step,
-      xIsNext: (step % 2) ? false : true,
-    });
-  }
-
+class Game extends React.Component {
   render() {
-    const history = this.state.history;
-    const current = history[this.state.stepNumber];
+    const history = this.props.history;
+    const current = history[this.props.stepNumber];
     const winner = calculateWinner(current.squares);
 
     let status;
     if (winner) {
       status = 'Winner: ' + winner;
     } else {
-      status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+      status = 'Next player: ' + (this.props.xIsNext ? 'X' : 'O');
     }
 
     const moves = history.map((step, move) => {
@@ -70,7 +25,7 @@ export default class Game extends React.Component {
 
       return (
         <li key={history.indexOf(step)}>
-          <a href="#" className={move === this.state.stepNumber ? "selectedItem" : ""} onClick={() => this.jumpTo(move)}>{desc}</a>
+          <a href="#" className={move === this.props.stepNumber ? "selectedItem" : ""} onClick={() => this.props.actions.goToHistory(move)}>{desc}</a>
         </li>
       );
     });
@@ -78,10 +33,10 @@ export default class Game extends React.Component {
     return (
       <div className="game">
         <div className="game-board">
-          <Board squares={current.squares} onClick={(i) => this.handleClick(i)} />
+          <Board squares={current.squares} onClick={(i) => this.props.actions.selectTile(i)} />
         </div>
         <div className="game-info">
-          <button disabled={history.length === 1} onClick={() => this.handleReset()}>Reset game</button>
+          <button disabled={history.length === 1} onClick={() => this.props.actions.resetGame()}>Reset game</button>
           <div>{status}</div>
           <ol>{moves}</ol>
         </div>
@@ -90,22 +45,18 @@ export default class Game extends React.Component {
   }
 }
 
-function calculateWinner(squares) {
-  const lines = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6],
-  ];
-  for (let i = 0; i < lines.length; i++) {
-    const [a, b, c] = lines[i];
-    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return squares[a];
-    }
-  }
-  return null;
+function mapStateToProps(state) {
+  return {
+    history: state.history,
+    stepNumber: state.stepNumber,
+    xIsNext: state.xIsNext
+  };
 }
+
+const actions = {resetGame, selectTile, goToHistory};
+
+function mapDispatchToProps(dispatch) {
+  return { actions: bindActionCreators(actions, dispatch) };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Game);
