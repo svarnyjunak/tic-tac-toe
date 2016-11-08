@@ -3,21 +3,21 @@ export const SELECT_TILE = "SELECT_TILE"
 export const GO_TO_HISTORY = "GO_TO_HISTORY"
 
 export function resetGame() {
-    return {
-        type: RESET_GAME,
-    };
+  return {
+    type: RESET_GAME
+  };
 }
 
 export function selectTile(tileIndex) {
-    return {
-        type: SELECT_TILE,
-        tileIndex: tileIndex
-    }
+  return {
+    type: SELECT_TILE,
+    tileIndex
+  }
 }
 
 export function goToHistory(step) {
-    return {
-        type: GO_TO_HISTORY,
-        step: step
-    }
+  return {
+    type: GO_TO_HISTORY,
+    step
+  }
 }

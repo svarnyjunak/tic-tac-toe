@@ -1,5 +1,5 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import React from "react"
+import ReactDOM from "react-dom"
 import { Provider } from 'react-redux'
 import Game from "../src/components/game"
 import { createStore } from "redux"
@@ -13,7 +13,7 @@ let unsubscribe = store.subscribe(() =>
   console.log(store.getState())
 )
 
-store.dispatch(resetGame())
+store.dispatch(resetGame());
 
 ReactDOM.render(
   <Provider store={store}>

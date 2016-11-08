@@ -1,0 +1,40 @@
+{
+	"env": {
+		"es6": true,
+		"node": true,
+		"browser": true
+	},
+	"parserOptions": {
+		"ecmaVersion": 6,
+		"sourceType": "module"
+	},
+	"ecmaFeatures": {
+		"modules": true
+	},
+	"plugins": ["import", "react"],
+	"extends": "airbnb-base",
+	"rules": {
+		"indent": ["error", 2],
+		"quotes": [2, "double"],
+		"no-console": 0,
+		"linebreak-style": [2, "windows"],
+		"semi": [0, "never"],
+		"comma-dangle": [2, "never"],
+		"space-before-function-paren": [
+			2, { "anonymous": "never", "named": "never" }
+		],
+		"brace-style": [2, "stroustrup"],
+		"prefer-rest-params": 0,
+		"consistent-return": 0,
+		"no-global-assign": 2,
+		"no-param-reassign": [2, { "props": false }],
+		"no-use-before-define": ["error", { "functions": false, "classes": true }],
+    "no-plusplus": 0,
+    "import/prefer-default-export": 0,
+		"valid-jsdoc": [2, {
+			"requireReturn": true,
+			"requireReturnDescription": false,
+			"requireParamDescription": false
+		}]
+	}
+}
