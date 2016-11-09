@@ -4,7 +4,7 @@ export default class Square extends React.Component {
   constructor() {
     super();
     this.state = {
-      value: null,
+      value: null
     };
   }
 
@@ -15,4 +15,4 @@ export default class Square extends React.Component {
       </button>
     );
   }
-}   
+}

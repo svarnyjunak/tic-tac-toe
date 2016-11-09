@@ -1,15 +1,14 @@
-import React from "react"
 import ReactDOM from "react-dom"
-import { Provider } from 'react-redux'
-import Game from "../src/components/game"
+import { Provider } from "react-redux"
 import { createStore } from "redux"
+import Game from "../src/components/game"
 import game from "./reducers/gameReducer"
 import { resetGame } from "./actions/gameActions"
 
-let store = createStore(game)
+const store = createStore(game)
 console.log(store.getState())
 
-let unsubscribe = store.subscribe(() =>
+store.subscribe(() =>
   console.log(store.getState())
 )
 
@@ -19,5 +18,5 @@ ReactDOM.render(
   <Provider store={store}>
     <Game />
   </Provider>,
-  document.getElementById('container')
+  document.getElementById("container")
 );
