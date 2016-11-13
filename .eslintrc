@@ -33,6 +33,7 @@
 		"no-use-before-define": ["error", { "functions": false, "classes": true }],
     "no-plusplus": 0,
     "import/prefer-default-export": 0,
+    "import/no-extraneous-dependencies": 0,
     "react/jsx-uses-vars": [2],
 		"valid-jsdoc": [2, {
 			"requireReturn": true,

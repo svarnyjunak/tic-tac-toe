@@ -1,3 +1,4 @@
+import React from "react" // eslint-disable-line no-unused-vars
 import ReactDOM from "react-dom"
 import { Provider } from "react-redux"
 import { createStore } from "redux"
@@ -6,11 +7,6 @@ import game from "./reducers/gameReducer"
 import { resetGame } from "./actions/gameActions"
 
 const store = createStore(game)
-console.log(store.getState())
-
-store.subscribe(() =>
-  console.log(store.getState())
-)
 
 store.dispatch(resetGame());
 
