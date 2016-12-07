@@ -3,7 +3,7 @@ import ReactDOM from "react-dom"
 import { Provider } from "react-redux"
 import { createStore } from "redux"
 import io from "socket.io-client"
-import Game from "../src/components/game"
+import App from "../src/components/app"
 import reducer from "./reducers/gameReducer"
 import actionCreators from "./actions/gameActionCreators"
 
@@ -16,7 +16,7 @@ const socket = io("localhost:4000");
 
 ReactDOM.render(
   <Provider store={store}>
-    <Game socket={ socket } />
+    <App socket={ socket } />
   </Provider>,
   document.getElementById("container")
 );
