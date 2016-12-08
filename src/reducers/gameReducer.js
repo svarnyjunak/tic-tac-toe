@@ -30,7 +30,9 @@ function startGame(state, action) {
 function resetGame() {
   return {
     history: [{
-      squares: Array(9).fill(null)
+      squares: [{}, {}, {}, 
+                {}, {}, {}, 
+                {}, {}, {}]
     }],
     stepNumber: 0,
     xIsNext: true,
@@ -49,23 +51,44 @@ function setJoiningGame(state) {
 function selectTile(state, action) {
   const history = state.history;
   const current = history[history.length - 1];
-  const squares = current.squares.slice();
   const isLastStep = history.length - 1 === state.stepNumber
 
   if (!isLastStep) {
     return state;
   }
 
-  const isTileAlreadyFilled = squares[action.tileIndex];
+  function applyTileSelection(board, tileIndex) {
+    const squares = board.slice();
+    const selectedTile = Object.assign({}, squares[tileIndex], { value: state.xIsNext ? "X" : "O"});
+    squares[tileIndex] = selectedTile;
+    return squares
+  }
+
+  function applyWinnersLine(board, line) {
+    for(let i = 0; i < line.length; i++) {
+      board[line[i]] = Object.assign({}, board[line[i]], {causedTheWin: true}); 
+    }
+
+    return board;
+  }
+
+  const selectedSquare = current.squares[action.tileIndex];
+  const isTileAlreadyFilled = selectedSquare.value;
   if (isTileAlreadyFilled) {
     return state;
   }
 
-  if (calculateWinner(squares)) {
+  if (calculateWinner(current.squares)) {
     return state;
   }
 
-  squares[action.tileIndex] = state.xIsNext ? "X" : "O";
+  let squares = applyTileSelection(current.squares, action.tileIndex);  
+  const gameResult = calculateWinner(squares);
+
+  if(gameResult) {
+    squares = applyWinnersLine(squares, gameResult.line);
+  }
+
   const newState = {
     history: history.concat([{ squares }]),
     stepNumber: ++state.stepNumber,

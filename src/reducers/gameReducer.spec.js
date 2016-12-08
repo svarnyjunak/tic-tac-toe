@@ -26,24 +26,26 @@ describe("reducers", () => {
     });
 
     describe("RESET_GAME", () => {
+      const state = changeState({}, actionCreators.resetGame());
+
       it("should have history with one record", () => {
-        const state = changeState({}, actionCreators.resetGame());
         assert.equal(1, state.history.length);
       });
 
       it("should have stepNumber equal to 0", () => {
-        const state = changeState({}, actionCreators.resetGame());
         assert.equal(0, state.stepNumber);
       });
 
       it("should have xIsNext equal to true", () => {
-        const state = changeState({}, actionCreators.resetGame());
         assert.equal(true, state.xIsNext);
       });
 
       it("should have gameState set to MENU", () => {
-        const state = changeState({}, actionCreators.resetGame());
         assert.equal("MENU", state.gameState);
+      });
+
+      it("should have set all squares filled with empty object", () => {
+        state.history[0].squares.forEach(s => assert.deepEqual({}, s));
       });
     });
 
@@ -76,7 +78,11 @@ describe("reducers", () => {
         const newState = changeState(state, actionCreators.selectTile(4));
 
         it("should fill X in the center", () => {
-          assert.equal("X", newState.history[1].squares[4]);
+          assert.equal("X", newState.history[1].squares[4].value);
+        });
+
+        it("should not change any other square", () => {
+          assert.equal(undefined, newState.history[1].squares[0].value);
         });
 
         it("should add new step", () => {
@@ -105,17 +111,31 @@ describe("reducers", () => {
         assert.equal(prevState, newState);
       });
 
+      const x = {value: "X"};
+      const _ = {};
+
       it("should be no change if game is alread won", () => {
         const state = changeState({}, actionCreators.resetGame());
         state.history[0].squares = [
-          "X", "X", "X",
-          null, null, null,
-          null, null, null
+          x, x, x,
+          _, _, _,
+          _, _, _
         ];
 
         const newState = changeState(state, actionCreators.selectTile(0));
 
         assert.equal(state, newState);
+      });
+
+      it("should fill causedTheWin when last tile in row is selected", () => {
+        const state = changeState({}, actionCreators.resetGame());
+        state.history[0].squares = [
+          x, x, _,
+          _, _, _,
+          _, _, _
+        ];
+        const newState = changeState(state, actionCreators.selectTile(2));
+        assert.equal(true, newState.history[1].squares[0].causedTheWin);
       });
 
       it("should be different instace of state", () => {
