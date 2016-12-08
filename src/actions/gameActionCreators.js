@@ -1,5 +1,18 @@
 import { actions } from "./gameActions"
 
+function createGame() {
+  return {
+    type: actions.CREATE_GAME,
+  };
+}
+
+function joinGame(gameId) {
+  return {
+    type: actions.JOIN_GAME,
+    gameId: gameId,
+  };
+}
+
 function startGame(isX) {
   return {
     type: actions.START_GAME,
@@ -33,6 +46,13 @@ function selectTile(tileIndex) {
   }
 }
 
+function tileSelected(tileIndex) {
+  return {
+    type: actions.TILE_SELECTED,
+    tileIndex
+  }
+}
+
 function goToHistory(step) {
   return {
     type: actions.GO_TO_HISTORY,
@@ -41,10 +61,13 @@ function goToHistory(step) {
 }
 
 export default {
+  createGame,
+  joinGame,
   startGame,
   resetGame,
   setGameCreated,
   setJoiningGame,
   selectTile,
+  tileSelected,
   goToHistory
 }

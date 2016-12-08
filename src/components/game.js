@@ -4,13 +4,8 @@ import { calculateWinner } from "../utils/utils"
 
 export default class Game extends React.Component {
   handleTileSelected(tileIndex) {
-    console.log(this.props.xIsNext);
-    console.log(this.props.isX);
-    console.log(this.props.xIsNext === this.props.isX);
-
     if (this.props.xIsNext === this.props.isX) {
-      this.props.socket.emit("tile selected", tileIndex);
-      this.props.actions.selectTile(tileIndex);
+      this.props.actions.tileSelected(tileIndex);
     }
   }
 

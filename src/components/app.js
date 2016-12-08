@@ -5,24 +5,8 @@ import Game from "../../src/components/game.js"
 import actionCreators from "../actions/gameActionCreators"
 
 class App extends React.Component {
-  componentDidMount() {
-    const { socket, actions } = this.props;
-    socket.on("tile selected", (tileIndex) => {
-      actions.selectTile(tileIndex);
-    });
-
-    socket.on("GAME_CREATED", (gameId) => {
-      actions.setGameCreated({ gameId });
-    });
-
-    socket.on("GAME_STARTED", (data) => {
-      actions.startGame(data.isX);
-    });
-  }
-
   handleCreateGame() {
-    this.props.socket.emit("CREATE_GAME");
-    // this.props.actions.startGame();
+    this.props.actions.createGame();
   }
 
   handleJoiningGame() {
@@ -31,7 +15,7 @@ class App extends React.Component {
 
   handleJoinGame() {
     const gameId = this.refs.gameId.value;
-    this.props.socket.emit("JOIN_GAME", gameId);
+    this.props.actions.joinGame(gameId);
   }
 
   render() {
