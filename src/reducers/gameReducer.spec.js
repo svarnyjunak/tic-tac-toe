@@ -88,14 +88,6 @@ describe("reducers", () => {
         });
       }
 
-      it("should be no change if it is not player's turn", () => {
-        const state = changeState({}, actionCreators.resetGame());
-        const stateGameCreated = changeState(state, actionCreators.setGameCreated({ isX: false }));
-        const stateTileSelected = changeState(stateGameCreated, actionCreators.selectTile(4));
-
-        assert.equal(stateGameCreated, stateTileSelected);
-      });
-
       it("should be no change if tile is already filled", () => {
         const state = changeState({}, actionCreators.resetGame());
         const prevState = changeState(state, actionCreators.selectTile(4));
