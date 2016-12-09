@@ -27,13 +27,13 @@ export default class Game extends React.Component {
     return (
       <div className="game">
         <div className="game-board">
+          <GameStatus squares={current.squares} xIsNext={this.props.xIsNext} isX={this.props.isX} />
           <Board squares={current.squares} onClick={this.handleTileSelected.bind(this)} />
         </div>
         <div className="game-info">
           <button disabled={history.length === 1} onClick={() => this.props.actions.resetGame()}>
             Reset game
           </button>
-          <GameStatus squares={current.squares} xIsNext={this.props.xIsNext} />
           <ol>{moves}</ol>
         </div>
       </div>
