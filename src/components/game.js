@@ -1,6 +1,6 @@
 import React from "react";
-import Board from "../../src/components/board";
-import { calculateWinner } from "../utils/utils"
+import Board from "./board";
+import GameStatus from "./gameStatus";
 
 export default class Game extends React.Component {
   handleTileSelected(tileIndex) {
@@ -12,15 +12,6 @@ export default class Game extends React.Component {
   render() {
     const history = this.props.history;
     const current = history[this.props.stepNumber];
-    const gameState = calculateWinner(current.squares);
-
-    let status;
-    if (gameState) {
-      status = "Winner: " + gameState.winner;
-    } else {
-      status = "Next player: " + (this.props.xIsNext ? "X" : "O");
-    }
-
     const moves = history.map((step, move) => {
       const desc = move ?
         "Move #" + move :
@@ -42,7 +33,7 @@ export default class Game extends React.Component {
           <button disabled={history.length === 1} onClick={() => this.props.actions.resetGame()}>
             Reset game
           </button>
-          <div>{status}</div>
+          <GameStatus squares={current.squares} xIsNext={this.props.xIsNext} />
           <ol>{moves}</ol>
         </div>
       </div>
