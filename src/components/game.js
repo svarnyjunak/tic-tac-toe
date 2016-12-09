@@ -12,11 +12,11 @@ export default class Game extends React.Component {
   render() {
     const history = this.props.history;
     const current = history[this.props.stepNumber];
-    const winner = calculateWinner(current.squares);
+    const gameState = calculateWinner(current.squares);
 
     let status;
-    if (winner) {
-      status = "Winner: " + winner;
+    if (gameState) {
+      status = "Winner: " + gameState.winner;
     } else {
       status = "Next player: " + (this.props.xIsNext ? "X" : "O");
     }
