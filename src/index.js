@@ -2,7 +2,7 @@ import React from "react" // eslint-disable-line no-unused-vars
 import ReactDOM from "react-dom"
 import { Provider } from "react-redux"
 import { createStore, applyMiddleware } from "redux"
-import { Router, Route, browserHistory } from 'react-router'
+import { Router, Route, browserHistory } from "react-router"
 import App from "./components/app"
 import reducer from "./reducers/gameReducer"
 import actionCreators from "./actions/gameActionCreators"
@@ -19,7 +19,7 @@ ReactDOM.render(
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/" component={App} />
-    </Router>  
+    </Router>
   </Provider>,
   document.getElementById("container")
 );
