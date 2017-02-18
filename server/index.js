@@ -13,7 +13,9 @@ if (process.env.NODE_ENV !== "production") {
   console.log("PRODUCTION ENVIRONMENT");
 }
 
-app.use(express.static(path.join(__dirname, "public")));
+app.get('/*', (req,res) => {
+  res.sendfile(path.join(__dirname, 'public/index.html'))
+});
 
 const server = app.listen(4000, () => {
   console.log("App listening on port 4000")
