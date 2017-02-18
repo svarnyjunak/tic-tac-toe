@@ -1,3 +1,4 @@
+import { merge } from "ramda";
 import { actions } from "../actions/gameActions"
 import { calculateWinner } from "../utils/utils"
 
@@ -21,7 +22,7 @@ export default function game(state, action) {
 }
 
 function startGame(state, action) {
-  return Object.assign({}, state, {
+  return merge(state, {
     gameState: "STARTED",
     isX: action.isX
   });
@@ -30,8 +31,8 @@ function startGame(state, action) {
 function resetGame() {
   return {
     history: [{
-      squares: [{}, {}, {}, 
-                {}, {}, {}, 
+      squares: [{}, {}, {},
+                {}, {}, {},
                 {}, {}, {}]
     }],
     stepNumber: 0,
@@ -41,11 +42,11 @@ function resetGame() {
 }
 
 function setGameCreated(state, action) {
-  return Object.assign({}, state, { gameId: action.gameId, gameState: "WAITING FOR OPONENT" });
+  return merge(state, { gameId: action.gameId, gameState: "WAITING FOR OPONENT" });
 }
 
 function setJoiningGame(state) {
-  return Object.assign({}, state, { gameState: "JOINING GAME" });
+  return merge(state, { gameState: "JOINING GAME" });
 }
 
 function selectTile(state, action) {
@@ -59,14 +60,14 @@ function selectTile(state, action) {
 
   function applyTileSelection(board, tileIndex) {
     const squares = board.slice();
-    const selectedTile = Object.assign({}, squares[tileIndex], { value: state.xIsNext ? "X" : "O"});
+    const selectedTile = merge(squares[tileIndex], { value: state.xIsNext ? "X" : "O" });
     squares[tileIndex] = selectedTile;
     return squares
   }
 
   function applyWinnersLine(board, line) {
-    for(let i = 0; i < line.length; i++) {
-      board[line[i]] = Object.assign({}, board[line[i]], {causedTheWin: true}); 
+    for (let i = 0; i < line.length; i++) {
+      board[line[i]] = merge(board[line[i]], { causedTheWin: true });
     }
 
     return board;
@@ -82,10 +83,10 @@ function selectTile(state, action) {
     return state;
   }
 
-  let squares = applyTileSelection(current.squares, action.tileIndex);  
+  let squares = applyTileSelection(current.squares, action.tileIndex);
   const gameResult = calculateWinner(squares);
 
-  if(gameResult) {
+  if (gameResult) {
     squares = applyWinnersLine(squares, gameResult.line);
   }
 
@@ -94,11 +95,11 @@ function selectTile(state, action) {
     stepNumber: ++state.stepNumber,
     xIsNext: !state.xIsNext
   };
-  return Object.assign({}, state, newState);
+  return merge(state, newState);
 }
 
 function goToHistory(state, action) {
-  return Object.assign({}, state, {
+  return merge(state, {
     stepNumber: action.step,
     xIsNext: (action.step % 2)
   });
