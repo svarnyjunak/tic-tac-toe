@@ -14,9 +14,10 @@ describe("utils", () => {
       const _ = {};
 
       describe("X has three from left to right", () => {
-        const board = [ x, x, x,
-                        _, _, _,
-                        _, _, _ ];
+        const board = [
+          x, x, x,
+          _, _, _,
+          _, _, _];
         const result = calculateWinner(board);
 
         it("should retrun X when X has three from left to right", () => {
@@ -29,9 +30,11 @@ describe("utils", () => {
       });
 
       describe("O has three from top to down", () => {
-        const board = [ o, _, _,
-                        o, _, _,
-                        o, _, _  ];
+        const board = [
+          o, _, _,
+          o, _, _,
+          o, _, _];
+
         const result = calculateWinner(board);
 
         it("should return O when O has three from top to down", () => {
@@ -44,9 +47,10 @@ describe("utils", () => {
       });
 
       describe("O has three on the diagonal", () => {
-        const board = [ o, _, _,
-                        _, o, _,
-                        _, _, o  ];
+        const board = [
+          o, _, _,
+          _, o, _,
+          _, _, o];
         const result = calculateWinner(board);
 
         it("should have winner set to O", () => {

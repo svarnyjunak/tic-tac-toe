@@ -1,7 +1,7 @@
 import React from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import Game from "../../src/components/game.js"
+import Game from "../../src/components/game"
 import actionCreators from "../actions/gameActionCreators"
 
 class App extends React.Component {
@@ -20,30 +20,30 @@ class App extends React.Component {
 
   render() {
     switch (this.props.gameState) {
-      case "STARTED":
-        return <Game {...this.props} />
-      case "MENU":
-        return (
+    case "STARTED":
+      return <Game {...this.props} />
+    case "MENU":
+      return (
           <div>
             <button onClick={this.handleCreateGame.bind(this)} >Create game</button>
             <button onClick={this.handleJoiningGame.bind(this)} >Join game</button>
           </div>
-        );
-      case "WAITING FOR OPONENT":
-        return (
+      );
+    case "WAITING FOR OPONENT":
+      return (
           <div>
             <input type="text" readOnly="readonly" ref="input" onClick={() => this.refs.input.select()} value={this.props.gameId} />
           </div>
-        );
-      case "JOINING GAME":
-        return (
+      );
+    case "JOINING GAME":
+      return (
           <div>
             <input type="text" ref="gameId" />
             <button onClick={this.handleJoinGame.bind(this)}>Join game</button>
           </div>
-        )
-      default:
-        return (<div></div>);
+      )
+    default:
+      return (<div></div>);
     }
   }
 }
