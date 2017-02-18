@@ -2,14 +2,14 @@ import { actions } from "./gameActions"
 
 function createGame() {
   return {
-    type: actions.CREATE_GAME,
+    type: actions.CREATE_GAME
   };
 }
 
 function joinGame(gameId) {
   return {
     type: actions.JOIN_GAME,
-    gameId: gameId,
+    gameId
   };
 }
 
